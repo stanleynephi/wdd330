@@ -11,7 +11,11 @@ function addProductToCart(product) {
     cart = [];
   }
   //add the product to the cart
-  cart.push(product);
+  const addToCart = cart.push(product);
+
+  if (addToCart) {
+    alert(`Added ${product.Name} to cart`);
+  }
 
   //loop through the cart and log the total number of product in the cart
   setLocalStorage("so-cart", cart);
