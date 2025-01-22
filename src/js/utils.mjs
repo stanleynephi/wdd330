@@ -24,12 +24,12 @@ export function setClick(selector, callback) {
 
 
 //create a function to get the search parameter from the url
-function getParams(Param){
+export function getParams(Param){
   const urlSearchQuery = window.location.search;
   const urlParams = new URLSearchParams(urlSearchQuery);
-  const product = urlParams.get('product');
+  const product = urlParams.get("product");
+  return product;
 }
-export {getParams};
 
 //create a function called renderListWithTemplate
 function renderListWithTemplate(templatefn,parentElement,list,position = "afterbegin",clear = false){

@@ -1,21 +1,11 @@
-import { setLocalStorage } from "./utils.mjs";
+//import the add to cart function from project.js
+import { getLocalStorage,setLocalStorage } from './utils.mjs';
 
-
-//product details class modeled afer the product data class
-export default class ProductDetails{
-    constructor(productID,dataSource){
-        this.productID = productID;
-        this.product = {};
-        this.dataSource = dataSource;
-    }
-}
-
-//create a function to create a template for the product details
-function createTemplate(product){
-    //use return to create a template
-    return ` <section class = "product-details"> <h3> ${product.Brand.Name} </h3>
-    <h2 class = "divider"> ${product.NameWithoutBrans} </h2>
-        <img
+//function to create a template using js
+function productDetailsTemplate(product) {
+  return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
+    <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <img
       class="divider"
       src="${product.Image}"
       alt="${product.NameWithoutBrand}"
@@ -27,7 +17,55 @@ function createTemplate(product){
     </p>
     <div class="product-detail__add">
       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-    </div></section>
-    `
+    </div></section>`;
 }
+
+
+//Product Details class
+export default class ProductDetails{
+  constructor(productID,dataSource){
+    this.productID = productID;
+    this.product = {};
+    this.dataSource = dataSource;
+  }
+
+  async init() {
+    //use datasource to get details of current product
+    this.product = await this.dataSource.getProductDetails(this.productID);
+    //render unto HTML
+    this.renderProductDetails();
+    //add a listener to add to cart
+    document
+    .getElementById("addToCart")
+    .addEventListener("click", this.addToCart.bind(this));
+  }
+
+
+  addProductToCart(product){
+    //event listeners for add to cart
+      //use the get localstorage function to retrieve the data in the local storage
+    let cart = getLocalStorage("so-cart");
+    // Ensure cart is an array; if not, initialize it as an empty array
+    if (!Array.isArray(cart)) {
+      cart = [];
+    }
+  //add the product to the cart
+  addToCart = cart.push(product);
+
+  //loop through the cart and log the total number of product in the cart
+  setLocalStorage("so-cart", cart);
+
+    
+  }
+
+  renderProductDetails(selector){
+    //render the product details
+    const element = document.querySelector(selector);
+    element.insertAdjacentHTML(
+      "afterBegin",
+      productDetailsTemplate(this.product)
+    )
+  }
+}
+
 
