@@ -1,5 +1,6 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, getParams } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
+import ProductDetails from "./ProductDetails.mjs";
 
 const dataSource = new ProductData("tents");
 
@@ -12,10 +13,6 @@ function addProductToCart(product) {
   }
   //add the product to the cart
   const addToCart = cart.push(product);
-
-  if (addToCart) {
-    alert(`Added ${product.Name} to cart`);
-  }
 
   //loop through the cart and log the total number of product in the cart
   setLocalStorage("so-cart", cart);
@@ -30,3 +27,16 @@ async function addToCartHandler(e) {
 document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);
+
+
+  
+//get the product id from the url using the params function
+const productId = getParams("product");
+//console.log the product
+console.log(dataSource.findProductById(productId));
+
+//create a new instance of the product details class
+const productDetails = new ProductDetails(productId, dataSource);
+//initialize the product details
+productDetails.init();
+
