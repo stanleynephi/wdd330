@@ -3,14 +3,16 @@ import { renderListWithTemplate } from "./utils.mjs";
 
 //creating a function for html template to be used 
 function ProductCardTemplate(product){
-    return `<li class = "product-card">
-        <a href = "product_pages/index.html?product=">
-            <img src="" alt="Image of ">
-            <h3 class="card__brand"></h3>
-            <h2 class="card__name"></h2>
-            <p class="product-card__price">$</p>
-        </a>
-    </li>`
+    return `<li class="product-card">
+  <a href="product_pages/index.html?product=${product.Id}">
+  <img
+    src="${product.Image}"
+    alt="Image of ${product.Name}"
+  />
+  <h3 class="card__brand">${product.Brand.Name}</h3>
+  <h2 class="card__name">${product.Name}</h2>
+  <p class="product-card__price">$${product.FinalPrice}</p></a>
+</li>`;
 }
 
 
@@ -30,14 +32,24 @@ export default class ProductListing{
         this.renderList(list)
     }
 
+    renderList(list){
+        //use the renderListWithTemplate function to render the list of products
+        renderListWithTemplate(ProductCardTemplate,this.listElement,list)
+    }
+
     //adding a method to the class
     //add a method to this class called renderList to use the template
-    renderList(list) {
-        renderListWithTemplate(this.listElement, list, ProductCardTemplate);
-    }
+    // renderList(list) {
+    //     //use mapping
+    //     const listItems = list.map(ProductCardTemplate)
+    //     //use the renderListWithTemplate function to render the list
+    //     this.listElement.insertAdjacentHTML("afterbegin",htmlString.join(""))
+    // }
 }
 
 //method to filter out the number of tents and show only 4
 function filterTents(list){
     return list.filter((items)=> items.category === "tents").slice(0,4)
 }
+
+filterTents()

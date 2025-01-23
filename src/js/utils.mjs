@@ -27,12 +27,12 @@ export function setClick(selector, callback) {
 export function getParams(Param){
   const urlSearchQuery = window.location.search;
   const urlParams = new URLSearchParams(urlSearchQuery);
-  const product = urlParams.get("product");
+  const product = urlParams.get(Param);
   return product;
 }
 
 //create a function called renderListWithTemplate
-function renderListWithTemplate(templatefn,parentElement,list,position = "afterbegin",clear = false){
+export function renderListWithTemplate(templatefn,parentElement,list,position = "afterbegin",clear = false){
   const htmlString = list.map(ProductCardTemplate);
   //refactor this function
   if(clear){
@@ -41,5 +41,3 @@ function renderListWithTemplate(templatefn,parentElement,list,position = "afterb
   parentElement.listElement.insertAdjacentHTML(position, htmlString.join(''))
 }
 
-
-export {renderListWithTemplate};

@@ -1,10 +1,8 @@
-// //import ProductData from "./ProductData.mjs";
-// import ProductData from "./ProductData.mjs";
-// //import the product listing into the main.js file
-// import ProductListing from "./ProductListing.mjs";
+import ProductData from "./ProductData.mjs";
+import ProductList from "./ProductList.mjs";
 
-// //create a new instance of the product data class
-// const products = new ProductData("Tents");
+const dataSource = new ProductData("tents");
+const element = document.querySelector(".product-list");
+const listing = new ProductList("Tents", dataSource, element);
 
-// //create a new instance of the product listing class
-// const ProductListing = new ProductListing("Tents", products);
+listing.init();

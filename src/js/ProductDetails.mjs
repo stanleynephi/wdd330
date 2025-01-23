@@ -25,20 +25,32 @@ function productDetailsTemplate(product) {
 export default class ProductDetails{
   constructor(productID,dataSource){
     this.productID = productID;
-    this.product = {};
     this.dataSource = dataSource;
+    this.product = {};
   }
 
   async init() {
-    //use datasource to get details of current product
-    this.product = await this.dataSource.getProductDetails(this.productID);
+
+    try{
+            //use datasource to get details of current product
+    this.product = await this.dataSource.findProductById(this.productID);
     //render unto HTML
-    this.renderProductDetails();
+    this.renderProductDetails("main");
     //add a listener to add to cart
     document
     .getElementById("addToCart")
-    .addEventListener("click", this.addToCart.bind(this));
+    .addEventListener("click", this.addProductToCart.bind(this));
+    }
+
+    catch(error){
+      console.error(error);
+    }
+
   }
+
+  // addToCart() {
+  //   setLocalStorage("so-cart", this.product);
+  // }
 
 
   addProductToCart(product){
@@ -50,7 +62,7 @@ export default class ProductDetails{
       cart = [];
     }
   //add the product to the cart
-  addToCart = cart.push(product);
+  cart.push(this.product);
 
   //loop through the cart and log the total number of product in the cart
   setLocalStorage("so-cart", cart);
