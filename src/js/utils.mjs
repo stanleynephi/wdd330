@@ -41,3 +41,36 @@ export function renderListWithTemplate(templatefn,parentElement,list,position = 
   parentElement.listElement.insertAdjacentHTML(position, htmlString.join(''))
 }
 
+
+
+
+//create a function called renderListWithTemplate
+export function renderWithTemplate(templatefn,parentElement,data,callback){
+  parentElement.insertAdjacentHTML("afterbegin", templatefn)
+  //refactor this function
+  if(callback){
+    callback(data);
+  }
+}
+
+async function Template (path) {
+  const res = await fetch(path);
+  const html = await res.text();
+  return html
+}
+
+
+//function to dynamically load the header and footer into a page
+export  default async function RenderHeaderFooter(){
+  const headerTemp = await Template("../partials/header.html")
+  const header = document.getElementById("main-header")
+
+  const footerTemp = await Template("../partials/footer.html")
+  const footer = document.getElementById("#main-footer")
+
+
+  //render it using the renderWithTemplate function
+  renderWithTemplate(headerTemp,header)
+  renderWithTemplate(footerTemp,footer)
+}
+

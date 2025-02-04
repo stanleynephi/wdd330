@@ -1,4 +1,7 @@
-import { getLocalStorage,setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import RenderHeaderFooter from "./utils.mjs";
+
+RenderHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -22,10 +25,9 @@ function removeItemFromCart(index) {
   renderCartContents(); // Re-render the cart
 }
 
-
 //update the cartItemTemplate and add an "x" to each side of the
 //cart items so
-function cartItemTemplate(item,index) {
+function cartItemTemplate(item, index) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
