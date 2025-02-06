@@ -101,6 +101,7 @@ button {
   padding-top: 1em;
   position: relative;
   text-align: center;
+  right: -45rem;
 }
 
 .cart svg {

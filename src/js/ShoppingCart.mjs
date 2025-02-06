@@ -1,30 +1,34 @@
-//import the rendar with template function from the utils.js
-import { getLocalStorage } from "./utils.mjs";
+//display the element in the cart using what is added in the local storage
+import { getLocalStorage } from "./utils.mjs"
 
 
-//create a function for the html template
-function createHtmlTemplate(product){
-    return `
-        <li class = "product-card">
-        <a href = "product_pages/index.html?product=${product.Id}">
-        <img
-            src = "${product.Image}"
-    alt="Image of ${product.Name}"
-  />
-  <h3 class="card__brand">${product.Brand.Name}</h3>
-  <h2 class="card__name">${product.Name}</h2>
-  <p class="product-card__price">$${product.FinalPrice}</p></a>
-    `
-} 
+function CartCardTemplate(product){
+  const cartItems = `<li class="cart-cart divider">
+    <a href = "../product_page/index.html?product=${product.Id}">
+    <img
+      src = "${product.Image}"
+      alt = "Image of ${product.Name}"
+      />
+      <h3 class="card_brand">${product.Brand.Name}</h3>
+      <h3 class="card_name">${product.Name}</h3>
+      <p class="card_price">$${product.FinalPrice}</p>
+    </li>
+  `
 
-export default class Cart {
-    constructor(key, parentSelector) {
-      this.key = key;
-      this.parentSelector = parentSelector;
-    }
-    renderCartContents() {
-      const cartItems = getLocalStorage(this.key);
-      const htmlItems = cartItems.map((item) => createHtmlTemplate(item));
-      document.querySelector(this.parentSelector).innerHTML = htmlItems.join("");
-    }
+  return cartItems
+}
+
+export default class CartItems{
+  constructor(key, parentSelector) {
+    this.key = key;
+    this.parentSelector = parentSelector;
   }
+
+
+  RenderCartContent(){
+    const cartItems = getLocalStorage(this.key);
+    const htmlItems = cartItems.map((item) => CartCardTemplate(item));
+    document.querySelector(this.parentSelector).innerHTML = htmlItems.join("");
+  }
+}
+

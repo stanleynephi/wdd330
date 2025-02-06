@@ -33,27 +33,28 @@ export function getParams(Param){
 
 //create a function called renderListWithTemplate
 export function renderListWithTemplate(templatefn,parentElement,list,position = "afterbegin",clear = false){
-  const htmlString = list.map(ProductCardTemplate);
+  const htmlString = list.map(templatefn);
   //refactor this function
   if(clear){
     parentElement.innerHTML = "";
   }
-  parentElement.listElement.insertAdjacentHTML(position, htmlString.join(''))
+  parentElement.insertAdjacentHTML(position, htmlString.join(''))
 }
 
 
 
 
 //create a function called renderListWithTemplate
-export function renderWithTemplate(templatefn,parentElement,data,callback){
-  parentElement.insertAdjacentHTML("afterbegin", templatefn)
+export function renderWithTemplate(template,parentElement,data,callback){
+
+  
   //refactor this function
   if(callback){
     callback(data);
   }
 }
 
-async function Template (path) {
+async function loadTemplate (path) {
   const res = await fetch(path);
   const html = await res.text();
   return html
@@ -61,16 +62,25 @@ async function Template (path) {
 
 
 //function to dynamically load the header and footer into a page
-export  default async function RenderHeaderFooter(){
-  const headerTemp = await Template("../partials/header.html")
-  const header = document.getElementById("main-header")
+export  default async function loadHeaderFooter(){
+  const headerTemplate = await loadTemplate("../src/partials/header.html")
+  console.log(headerTemplate)
+  const header = document.querySelector("#main-header")
 
-  const footerTemp = await Template("../partials/footer.html")
-  const footer = document.getElementById("#main-footer")
+  const footerTemplate = await loadTemplate("../src/partials/footer.html")
+  const footer = document.querySelector("#main-footer")
+
+  if(header){
+    console.log("header found")
+  }
+
+  if(footer){
+    console.log("footer found")
+  }
 
 
   //render it using the renderWithTemplate function
-  renderWithTemplate(headerTemp,header)
-  renderWithTemplate(footerTemp,footer)
+  renderWithTemplate(headerTemplate,header)
+  renderWithTemplate(footerTemplate,footer)
 }
 

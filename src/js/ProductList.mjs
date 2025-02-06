@@ -4,7 +4,7 @@ import { renderListWithTemplate } from "./utils.mjs";
 //creating a function for html template to be used 
 function ProductCardTemplate(product){
     return `<li class="product-card">
-  <a href="product_pages/index.html?product=${product.Id}">
+  <a href="../product_page/index.html?product=${product.Id}">
   <img
     src="${product.Image}"
     alt="Image of ${product.Name}"
@@ -18,7 +18,7 @@ function ProductCardTemplate(product){
 
 
 //create a list of product card in HTML from an array
-export default class ProductListing{
+export default class ProductList{
     constructor(category,dataSource,listElement){
         this.category = category;
         this.dataSource = dataSource;
@@ -27,9 +27,7 @@ export default class ProductListing{
 
     //use init to get the data from the data source
     async init(){
-        //use the data source to get the data
-        const list = await this.dataSource.getData()
-        this.renderList(list)
+        const list = await this.dataSource.getData(this.category)
     }
 
     renderList(list){
@@ -47,9 +45,9 @@ export default class ProductListing{
     // }
 }
 
-//method to filter out the number of tents and show only 4
+// //method to filter out the number of tents and show only 4
 function filterTents(list){
-    return list.filter((items)=> items.category === "tents").slice(0,4)
+    return list.filter((items)=> items.category === "tents").slice(0,)
 }
 
-filterTents()
+// filterTents()
