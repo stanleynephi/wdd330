@@ -13,14 +13,7 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
-export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
-    event.preventDefault();
-    callback();
-  });
-  qs(selector).addEventListener("click", callback);
-}
+
 
 
 //create a function to get the search parameter from the url
@@ -46,7 +39,7 @@ export function renderListWithTemplate(templatefn,parentElement,list,position = 
 
 //create a function called renderListWithTemplate
 export function renderWithTemplate(template,parentElement,data,callback){
-
+  parentElement.insertAdjacentHTML("afterbegin",template)
   
   //refactor this function
   if(callback){
@@ -61,26 +54,32 @@ async function loadTemplate (path) {
 }
 
 
-//function to dynamically load the header and footer into a page
-export  default async function loadHeaderFooter(){
-  const headerTemplate = await loadTemplate("../src/partials/header.html")
-  console.log(headerTemplate)
+
+
+
+
+
+//function to dynamically display the header and footer of our page
+export default async function loadHeaderFooter(){
+  const headerTemplate = await loadTemplate("../partials/header.html")
   const header = document.querySelector("#main-header")
 
-  const footerTemplate = await loadTemplate("../src/partials/footer.html")
+
+  const footerTemplate = await loadTemplate("../partials/footer.html")
   const footer = document.querySelector("#main-footer")
 
-  if(header){
-    console.log("header found")
-  }
-
-  if(footer){
-    console.log("footer found")
-  }
-
-
-  //render it using the renderWithTemplate function
   renderWithTemplate(headerTemplate,header)
   renderWithTemplate(footerTemplate,footer)
+
 }
 
+
+
+// set a listener for both touchend and click
+export function setClick(selector, callback) {
+  qs(selector).addEventListener("touchend", (event) => {
+    event.preventDefault();
+    callback();
+  });
+  qs(selector).addEventListener("click", callback);
+}

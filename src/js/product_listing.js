@@ -1,11 +1,14 @@
-import loadHeaderFooter, { getParams } from "./utils.mjs";
+import { getParams } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
+import loadHeaderFooter from "./utils.mjs"
 
 loadHeaderFooter();
-const category = getParams("category");
-const dataSource = new ProductData();
-const element = document.querySelector(".product-list");
-const listing = new ProductList(element, dataSource, category);
 
-listing.init();
+const category = getParams("hammock")
+const productData = new ProductData(category);
+const listElement = document.querySelector(".product-list")
+const productList = new ProductList(listElement, productData, category);
+
+productList.init();
+

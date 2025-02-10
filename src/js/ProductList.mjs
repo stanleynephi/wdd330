@@ -26,28 +26,16 @@ export default class ProductList{
     }
 
     //use init to get the data from the data source
-    async init(){
+    async init() {
         const list = await this.dataSource.getData(this.category)
+        console.log(list)
+        // this.renderList(list)
+        document.querySelector(".title").innerHTML = this.category
     }
-
+    
+    
     renderList(list){
         //use the renderListWithTemplate function to render the list of products
         renderListWithTemplate(ProductCardTemplate,this.listElement,list)
     }
-
-    //adding a method to the class
-    //add a method to this class called renderList to use the template
-    // renderList(list) {
-    //     //use mapping
-    //     const listItems = list.map(ProductCardTemplate)
-    //     //use the renderListWithTemplate function to render the list
-    //     this.listElement.insertAdjacentHTML("afterbegin",htmlString.join(""))
-    // }
 }
-
-// //method to filter out the number of tents and show only 4
-function filterTents(list){
-    return list.filter((items)=> items.category === "tents").slice(0,)
-}
-
-// filterTents()
